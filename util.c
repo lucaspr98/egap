@@ -452,7 +452,9 @@ void mergeBWT128ext(g_data *g, bool lastRound)
       int da_value=0;
       int e = fread(&da_value, g->outputDA, 1, g->daf[currentColor]);
       if(e!=1) die(__func__);
-      da_value+=g->bwtDocs[currentColor];
+      // da_value+=g->bwtDocs[currentColor];
+      // Change da_value to receive current color because this way we will get from which read file the BWT value is, instead of which read inside read file
+      da_value = currentColor;
       //if(fputc(currentColor, daOutFile)==EOF)
       if(fwrite(&da_value, g->outputDA, 1, daOutFile)==EOF)
         die("mergeBWT128ext: Error writing to Document Array file");   
@@ -607,7 +609,8 @@ void mergeBWT8(g_data *g, bool lastRound)
       int e = fread(&da_value, g->outputDA, 1, g->daf[currentColor]);
       if(e!=1) die(__func__);
       //if(fputc(currentColor, daOutFile)==EOF)
-      da_value+=g->bwtDocs[currentColor];
+      // Change da_value to receive current color because this way we will get from which read file the BWT value is, instead of which read inside read file
+      da_value = currentColor;
       if(fwrite(&da_value, g->outputDA, 1, daOutFile)==EOF)
         die("mergeBWT128ext: Error writing to Document Array file");   
       //printf("%d ==> %d\n", currentColor, da_value);
